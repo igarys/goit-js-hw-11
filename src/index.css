@@ -43,9 +43,9 @@ body {
     
 }
   .container {
+      
       background-color: blanchedalmond;
-
-   }
+}
 .gallery {
     display: flex;
     flex-wrap: wrap;
@@ -80,9 +80,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 40px;
 }
-
+.load-more {
+    margin-bottom: 40px;
+}
 .hidden {
     display: none;
 }
