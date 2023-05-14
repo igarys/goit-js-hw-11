@@ -5,7 +5,7 @@ import SimpleLightbox from "simplelightbox";
 // Dodatkowy import stylów
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-// const axios = require('axios/dist/node/axios.cjs');
+
 const API_URL = "https://pixabay.com/api/";
 const searchBtn = document.querySelector('.search-btn');
 const searchInput = document.querySelector('.search-input');
@@ -53,66 +53,74 @@ async function notify() {
                     `Hooray! We found ${totalHits} images.`
                     )
                     
-    } 
-    
-}
-
-
-async function createCards() {
-    // e.preventDefault();
-    const images = await fetchImg();
-    if (searchInput.value === "" || images.totalHits === 0 ) {
-        // galleryEl.innerHTML = "";    
-        loadMoreBtn.classList.add('hidden');
-        console.log("clear loading btn")
-    } else  {
-      loadMoreBtn.classList.remove('hidden');
-    (galleryEl.innerHTML = images.hits
-        .map(
-          image =>
-            `<div class="photo-card">
-            <a class="link" href=${image.largeImageURL}><img src=${image.largeImageURL}" alt="" title=${image.tags}/>
-            <img class="img" width="355"  src=${image.webformatURL} alt=${image.tags} loading="lazy" /></a>
-            <div class="info">
-            <p class="info-item">
-            <b>Likes:</b> ${image.likes}
-            </p>
-            <p class="info-item">
-            <b>Views:</b> ${image.views}
-            </p>
-            <p class="info-item">
-            <b>Comments: </b>${image.comments}
-            </p>
-            <p class="info-item">
-            <b>Downloads:</b> ${image.downloads}
-            </p>
-            </div>
-            </div>
-            `
-        )
-        .join(' '));
-      if (images.totalHits < 40) {
-        loadMoreBtn.classList.add('hidden');
-      }
-    }
-    // searchForm.removeAddEventListener;
-};
-async function loading(e) {
-  e.preventDefault();
-  const newCards = await fetchImg();
-  page++;
-  if (page > newCards.totalHits / per_page) {
-    Notiflix.Notify.info(
-      "We're sorry, but you've reached the end of search results."
-    );
-    loadMoreBtn.classList.add('hidden');
-  }
-    galleryEl.insertAdjacentElement('beforeend', createCards());
-}
+                } 
+                
+            }
+            
+            
+            async function createCards() {
+                // e.preventDefault();
+                const images = await fetchImg();
+                if (searchInput.value === "" || images.totalHits === 0 ) {
+                    // galleryEl.innerHTML = "";    
+                    loadMoreBtn.classList.add('hidden');
+                    console.log("clear loading btn")
+                } else  {
+                    loadMoreBtn.classList.remove('hidden');
+                    console.log("loading btn");
+                    (galleryEl.innerHTML = images.hits
+                        .map(
+                            image =>
+                            `<div class="photo-card">
+                            <a class="link" href=${image.largeImageURL}><img src=${image.largeImageURL}" alt="" title=${image.tags}/>
+                            <img class="img" width="355"  src=${image.webformatURL} alt=${image.tags} loading="lazy" /></a>
+                            <div class="info">
+                            <p class="info-item">
+                            <b>Likes:</b> ${image.likes}
+                            </p>
+                            <p class="info-item">
+                            <b>Views:</b> ${image.views}
+                            </p>
+                            <p class="info-item">
+                            <b>Comments: </b>${image.comments}
+                            </p>
+                            <p class="info-item">
+                            <b>Downloads:</b> ${image.downloads}
+                            </p>
+                            </div>
+                            </div>
+                            `
+                            )
+                            .join(' '));
+                            if (images.totalHits < 40) {
+                                loadMoreBtn.classList.add('hidden');
+                            }
+                        }
+                        // searchForm.removeAddEventListener;
+                    };
+                    const lightbox = new SimpleLightbox(".gallery a", {
+                        caption: true,
+                        captionsData: "alt",
+                        captionDelay: 250,
+                    });
+                    async function loading(e) {
+                        e.preventDefault();
+                        const newCards = await fetchImg();
+                        page++;
+                        if (page > newCards.totalHits / per_page) {
+                            Notiflix.Notify.info(
+                                "We're sorry, but you've reached the end of search results."
+                                );
+                                loadMoreBtn.classList.add('hidden');
+                            }
+                            galleryEl.insertAdjacentElement('beforeend', createCards());
+                        }
   loadMoreBtn.addEventListener('click', e => {
     
         loading(e);
-        e.preventDefault();
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
       });
     
     
@@ -120,23 +128,7 @@ async function loading(e) {
     
     searchBtn.addEventListener("click", notify);
     
-    // async function loading(e) {
-    //     e.preventDefault();
-    //     page++;
-    //     const newCards = await fetchImg();
-    //     if (page > newCards.totalHits / per_page || newCards.totalHits <= 40) {
-    //         Notiflix.Notify.info(
-    //             "We're sorry, but you've reached the end of search results."
-    //             );
-    //             loadMoreBtn.classList.add('hidden');
-    //         }
-    //         galleryEl.insertAdjacentHTML('beforeend', imagesGallery );
-    //                     };
-                        
-                        // loadMoreBtn.addEventListener('click', (e) => {
-                        //     loading(e);
-                        //     e.preventDefault();
-                        // });
+    
                         
 searchBtn.addEventListener("click", (e) => {
     galleryEl.innerHTML = "";
@@ -147,11 +139,6 @@ searchBtn.addEventListener("click", (e) => {
                         
                         
                         
-                        const lightbox = new SimpleLightbox(".gallery a", {
-                            caption: true,
-                            captionsData: "alt",
-                            captionDelay: 250,
-                        });
                         
 
 
