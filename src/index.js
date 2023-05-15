@@ -39,7 +39,6 @@ async function notify() {
     const notification = await fetchImg();
     q = searchInput.value;
         if (notification.totalHits === 0  ||  q === "") {
-            loadMore.classList.add('hidden');
             galleryEl.innerHTML = '';
             console.log('NO VALUE');
 
@@ -59,10 +58,9 @@ async function notify() {
             
             
             async function createCards() {
-                // e.preventDefault();
+              
                 const images = await fetchImg();
                 if (searchInput.value === "" || images.totalHits === 0 ) {
-                    // galleryEl.innerHTML = "";    
                     loadMoreBtn.classList.add('hidden');
                     console.log("clear loading btn")
                 } else  {
